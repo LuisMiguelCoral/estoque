@@ -4,9 +4,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
+            <div class="card mx-auto">
+                <div class="card-header text-center">Home</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -14,7 +13,13 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <div class="d-flex flex-column align-items-center">
+                        <a href="{{ route('produtos.index') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Lista de Produtos</a>
+                        <a href="{{ route('produtos.create') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Registrar Produto</a>
+                        <a href="{{ route('produtos.create') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Média de Vendas</a>
+                        <a href="{{ route('produtos.create') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Relatorio de Vendas</a>
+                        <a href="{{ route('produtos.create') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Historico de Vendas</a>
+                    </div>
                 </div>
             </div>
         </div>

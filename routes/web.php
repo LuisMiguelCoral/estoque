@@ -12,13 +12,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-use App\Http\Controllers\ProdutoController;
+Route::resource('produtos', App\Http\Controllers\ProdutoController::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// routes/web.php
+
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::resource('produtos', ProdutoController::class)->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// routes/web.php
+
+use App\Http\Controllers\ProdutoController;
+
+Route::resource('produtos', ProdutoController::class);
+
