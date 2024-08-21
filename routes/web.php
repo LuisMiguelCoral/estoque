@@ -34,4 +34,5 @@ Route::get('/produto-backup', [ProdutoBackupController::class, 'index'])->name('
 // Rota para o controlador de histórico
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 
+Route::get('/produtos/edit/{id}', [ProdutoController::class, 'edit'])->name('produtos.edit');
 

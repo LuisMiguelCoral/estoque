@@ -81,4 +81,21 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index')->with('success', 'Produtos atualizados e histórico registrado!');
     }
     
+    public function edit($id)
+    {
+        $produto = Produto::find($id);
+        return view('produtos.edit', compact('produto'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $produto = Produto::find($id);
+        $produto->nome = $request->nome;
+        $produto->quantidade = $request->quantidade;
+        $produto->save();
+
+        return redirect()->route('produtos.index')
+            ->with('success', 'Produto atualizado com sucesso!');
+}
+
 }
