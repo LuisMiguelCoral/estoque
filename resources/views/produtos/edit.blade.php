@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -31,13 +30,13 @@
                             <div class="form-group">
                                 <label for="quantidade">Quantidade:</label>
                                 <input type="number" name="quantidade" value="{{ $produto->quantidade }}"
-                                    class="form-control" required>
+                                    class="form-control" required min="0">
                             </div>
 
                             <div class="form-group">
-                                <label for="quantidade">Vendas:</label>
+                                <label for="vendas">Vendas:</label>
                                 <input type="number" name="vendas" value="{{ $produto->vendas }}"
-                                    class="form-control" required>
+                                    class="form-control" required min="0">
                             </div>
 
                             <div class="form-group text-center">
@@ -51,4 +50,3 @@
         </div>
     </div>
 @endsection
-
