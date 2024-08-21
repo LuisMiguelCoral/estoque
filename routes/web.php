@@ -1,32 +1,37 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\ProdutoBackupController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HistoricoController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Aqui é onde você pode registrar as rotas da web para o seu aplicativo.
+| Essas rotas são carregadas pelo RouteServiceProvider dentro de um grupo que
+| contém o grupo de middleware "web". Agora crie algo incrível!
 |
 */
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('produtos', App\Http\Controllers\ProdutoController::class);
-
-// routes/web.php
-
-use Illuminate\Support\Facades\Auth;
-
+// Rotas de autenticação
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Rota para a Home
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// routes/web.php
-
-use App\Http\Controllers\ProdutoController;
-
+// Rota resource para o controlador de produtos
 Route::resource('produtos', ProdutoController::class);
+
+// Rota para o método updateAll (atualização em massa)
+Route::post('/produtos/update-all', [ProdutoController::class, 'updateAll'])->name('produtos.updateAll');
+
+// Rota para o ProdutoBackupController
+Route::get('/produto-backup', [ProdutoBackupController::class, 'index'])->name('produto-backup.index');
+
+// Rota para o controlador de histórico
+Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
+
 

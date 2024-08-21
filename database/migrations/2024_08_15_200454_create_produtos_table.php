@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVendasToProdutosTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddVendasToProdutosTable extends Migration
      */
     public function up()
     {
-        Schema::table('produtos', function (Blueprint $table) {
-            $table->integer('vendas')->default(0); // Adiciona a coluna vendas com valor padrão 0
+        Schema::create('produtos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome')->unique();
+            $table->integer('quantidade');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddVendasToProdutosTable extends Migration
      */
     public function down()
     {
-        Schema::table('produtos', function (Blueprint $table) {
-            $table->dropColumn('vendas');
-        });
+        Schema::dropIfExists('produtos');
     }
-}
+};

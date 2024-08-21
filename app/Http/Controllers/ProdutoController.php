@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use App\Models\Historico;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -27,15 +28,16 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'nome' => 'required|unique:produtos,nome',
-            'quantidade' => 'required|integer',
+            'quantidade' => 'required|integer|min:0', 
         ], [
             'nome.unique' => 'Nome selecionado já registrado',
+            'quantidade.min' => 'Quantidade não pode ser negativa',
         ]);
 
         $produto = new Produto;
         $produto->nome = $request->nome;
         $produto->quantidade = $request->quantidade;
-        $produto->vendas = 0; // Pode definir um valor padrão para vendas
+        $produto->vendas = 0;
         $produto->save();
 
         return redirect()->route('produtos.index')
@@ -51,18 +53,32 @@ class ProdutoController extends Controller
                          ->with('success', 'Produto excluído com sucesso!');
     }
 
-    // Adicionando o método update
-    public function update(Request $request, $id)
+    public function updateAll(Request $request)
     {
-        $request->validate([
-            'vendas' => 'required|integer',
+        $validatedData = $request->validate([
+            'produtos.*.quantidade' => 'required|integer|min:0',
+            'produtos.*.vendas' => 'required|integer|min:0',
         ]);
-
-        $produto = Produto::findOrFail($id);
-        $produto->vendas = $request->input('vendas');
-        $produto->save();
-
-        return redirect()->route('produtos.index')
-                         ->with('success', 'Vendas atualizadas com sucesso!');
+    
+        foreach ($validatedData['produtos'] as $produtoId => $data) {
+            $produto = Produto::find($produtoId);
+            if ($produto) {
+                $produto->quantidade = $data['quantidade'];
+                $produto->vendas = $data['vendas'];
+                $produto->save();
+    
+                // Registra a atualização no histórico
+                Historico::create([
+                    'produto_id' => $produto->id,
+                    'nome' => $produto->nome,
+                    'quantidade' => $produto->quantidade,
+                    'vendas' => $produto->vendas,
+                    'created_at' => now(),
+                ]);
+            }
+        }
+    
+        return redirect()->route('produtos.index')->with('success', 'Produtos atualizados e histórico registrado!');
     }
+    
 }

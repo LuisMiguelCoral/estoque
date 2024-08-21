@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Adiciona o comando para resetar os produtos a cada 2 minutos
+        $schedule->command('produtos:reset-values')->everyTwoMinutes();
     }
 
     /**

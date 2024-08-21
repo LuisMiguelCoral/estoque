@@ -16,38 +16,54 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Quantidade</th>
-                            <th>Vendas</th> 
-                            <th>Remover</th>
-                        </tr>
-                        @foreach ($produtos as $produto)
-                        <tr>
-                            <td>{{ $produto->id }}</td>
-                            <td>{{ $produto->nome }}</td>
-                            <td>{{ $produto->quantidade }}</td>
-                            
-                            <td>
-                                <form action="{{ route('produtos.update', $produto->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="number" name="vendas" value="{{ $produto->vendas ?? 0 }}" class="form-control" style="display: inline-block; width: 70px;">
-                                    <button type="submit" class="btn btn-primary btn-sm">Atualizar</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Excluir</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('produtos.updateAll') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Quantidade</th>
+                                    <th>Vendas</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($produtos as $produto)
+                                <tr>
+                                    <td>{{ $produto->id }}</td>
+                                    <td>{{ $produto->nome }}</td>
+                                    <td>
+                                        <input min="0" type="number" name="produtos[{{ $produto->id }}][quantidade]" value="{{ $produto->quantidade ?? 0 }}" class="form-control mr-2" style="width: 80px;">
+                                    </td>
+                                    <td>
+                                        <input min="0" type="number" name="produtos[{{ $produto->id }}][vendas]" value="{{ $produto->vendas ?? 0 }}" class="form-control mr-2" style="width: 80px;">
+                                    </td>
+                                    <td>
+                                        <form id="delete-form-{{ $produto->id }}" action="{{ route('produtos.destroy', $produto->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este produto?');">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-success">Atualizar Todos</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
