@@ -7,6 +7,16 @@
             <div class="card">
                 <div class="card-header text-center">Histórico de Produtos</div>
                 <div class="card-body">
+
+                    <!-- Formulário de Filtro -->
+                    <form action="{{ route('historico.index') }}" method="GET" class="form-inline mb-3">
+                        <label for="date" class="mr-2">Filtrar por data:</label>
+                        <input type="date" name="date" id="date" class="form-control mr-2" value="{{ request('date') }}">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </form>
+
                     @if ($historicos->isEmpty())
                         <p>Nenhum histórico encontrado.</p>
                     @else
@@ -41,7 +51,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </form>
                     @endif
                 </div>

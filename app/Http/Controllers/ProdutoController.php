@@ -123,29 +123,37 @@ class ProdutoController extends Controller
             ->with('success', 'Produto atualizado com sucesso!');
     }
 
-    // Método para exibir o histórico
-    public function historico()
+    // Método para exibir o histórico com filtro por dia
+    public function historico(Request $request)
     {
-        $historicos = Historico::orderBy('created_at', 'desc')->get();
+        $query = Historico::query();
+
+        // Verifica se o filtro de data foi aplicado
+        if ($request->has('date') && $request->date) {
+            $query->whereDate('created_at', $request->date);
+        }
+
+        $historicos = $query->orderBy('created_at', 'desc')->get();
+
         return view('historico.index', compact('historicos'));
     }
+
     public function updateHistoricos(Request $request)
-{
-    $validatedData = $request->validate([
-        'historicos.*.quantidade' => 'required|integer|min:0',
-        'historicos.*.vendas' => 'required|integer|min:0',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'historicos.*.quantidade' => 'required|integer|min:0',
+            'historicos.*.vendas' => 'required|integer|min:0',
+        ]);
 
-    foreach ($validatedData['historicos'] as $historicoId => $data) {
-        $historico = Historico::find($historicoId);
-        if ($historico) {
-            $historico->quantidade = $data['quantidade'];
-            $historico->vendas = $data['vendas'];
-            $historico->save();
+        foreach ($validatedData['historicos'] as $historicoId => $data) {
+            $historico = Historico::find($historicoId);
+            if ($historico) {
+                $historico->quantidade = $data['quantidade'];
+                $historico->vendas = $data['vendas'];
+                $historico->save();
+            }
         }
+
+        return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
-
-    return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
-}
-
 }
