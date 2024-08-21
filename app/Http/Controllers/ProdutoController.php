@@ -40,6 +40,15 @@ class ProdutoController extends Controller
         $produto->vendas = 0; // Inicializa com 0 vendas
         $produto->save();
 
+        // Registra o produto no histórico ao ser criado
+        Historico::create([
+            'produto_id' => $produto->id,
+            'nome' => $produto->nome,
+            'quantidade' => $produto->quantidade,
+            'vendas' => $produto->vendas,
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('produtos.index')
                          ->with('success', 'Produto registrado com sucesso.');
     }
@@ -91,8 +100,8 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'nome' => 'required|string|max:255',
-            'quantidade' => 'required|integer',
-            'vendas' => 'required|integer',
+            'quantidade' => 'required|integer|min:0',
+            'vendas' => 'required|integer|min:0',
         ]);
 
         $produto = Produto::findOrFail($id);
@@ -101,7 +110,23 @@ class ProdutoController extends Controller
         $produto->vendas = $request->input('vendas');
         $produto->save();
 
+        // Registra a atualização no histórico
+        Historico::create([
+            'produto_id' => $produto->id,
+            'nome' => $produto->nome,
+            'quantidade' => $produto->quantidade,
+            'vendas' => $produto->vendas,
+            'created_at' => now(),
+        ]);
+
         return redirect()->route('produtos.index')
             ->with('success', 'Produto atualizado com sucesso!');
+    }
+
+    // Método para exibir o histórico
+    public function historico()
+    {
+        $historicos = Historico::orderBy('created_at', 'desc')->get();
+        return view('historico.index', compact('historicos'));
     }
 }

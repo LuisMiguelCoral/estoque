@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mx-auto">
+        <div class="col-md-10">
+            <div class="card">
                 <div class="card-header text-center">Histórico de Produtos</div>
                 <div class="card-body">
                     @if ($historicos->isEmpty())
@@ -18,7 +18,7 @@
                                     <th>Nome</th>
                                     <th>Quantidade</th>
                                     <th>Vendas</th>
-                                    <th>Data de Criação</th>
+                                    <th>Data de Atualização</th>
                                 </tr>
                             </thead>
                             <tbody>

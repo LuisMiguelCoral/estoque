@@ -14,12 +14,13 @@ class CreateHistoricosTable extends Migration
     {
         Schema::create('historicos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('produto_id')->constrained();
+            $table->unsignedBigInteger('produto_id');
             $table->string('nome');
             $table->integer('quantidade');
             $table->integer('vendas');
             $table->timestamps();
-
+        
+            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
         });
     }
 
