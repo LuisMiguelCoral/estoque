@@ -129,4 +129,23 @@ class ProdutoController extends Controller
         $historicos = Historico::orderBy('created_at', 'desc')->get();
         return view('historico.index', compact('historicos'));
     }
+    public function updateHistoricos(Request $request)
+{
+    $validatedData = $request->validate([
+        'historicos.*.quantidade' => 'required|integer|min:0',
+        'historicos.*.vendas' => 'required|integer|min:0',
+    ]);
+
+    foreach ($validatedData['historicos'] as $historicoId => $data) {
+        $historico = Historico::find($historicoId);
+        if ($historico) {
+            $historico->quantidade = $data['quantidade'];
+            $historico->vendas = $data['vendas'];
+            $historico->save();
+        }
+    }
+
+    return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
+}
+
 }

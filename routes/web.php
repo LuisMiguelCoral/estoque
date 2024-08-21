@@ -35,3 +35,5 @@ Route::get('/produto-backup', [ProdutoBackupController::class, 'index'])->name('
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 
 Route::get('/produtos/edit/{id}', [ProdutoController::class, 'edit'])->name('produtos.edit');
+
+Route::put('/historico/updateAll', [ProdutoController::class, 'updateHistoricos'])->name('historico.updateAll');
