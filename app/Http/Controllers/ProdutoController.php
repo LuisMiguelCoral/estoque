@@ -37,7 +37,7 @@ class ProdutoController extends Controller
         $produto = new Produto;
         $produto->nome = $request->nome;
         $produto->quantidade = $request->quantidade;
-        $produto->vendas = 0;
+        $produto->vendas = 0; // Inicializa com 0 vendas
         $produto->save();
 
         return redirect()->route('produtos.index')
@@ -89,13 +89,19 @@ class ProdutoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $produto = Produto::find($id);
-        $produto->nome = $request->nome;
-        $produto->quantidade = $request->quantidade;
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'quantidade' => 'required|integer',
+            'vendas' => 'required|integer',
+        ]);
+
+        $produto = Produto::findOrFail($id);
+        $produto->nome = $request->input('nome');
+        $produto->quantidade = $request->input('quantidade');
+        $produto->vendas = $request->input('vendas');
         $produto->save();
 
         return redirect()->route('produtos.index')
             ->with('success', 'Produto atualizado com sucesso!');
-}
-
+    }
 }

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -23,7 +22,7 @@
                                     <th>ID</th>
                                     <th>Nome</th>
                                     <th>Quantidade</th>
-                                    <th>Preço</th>
+                                    <th>Vendas</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -33,7 +32,7 @@
                                         <td>{{ $produto->id }}</td>
                                         <td>{{ $produto->nome }}</td>
                                         <td>{{ $produto->quantidade }}</td>
-                                        <td>R$ {{ number_format($produto->preco, 2, ',', '.') }}</td>
+                                        <td>{{ $produto->vendas }}</td>
                                         <td>
                                             <a href="{{ route('produtos.edit', $produto->id) }}"
                                                 class="btn btn-warning btn-sm">Editar</a>

@@ -34,6 +34,12 @@
                                     class="form-control" required>
                             </div>
 
+                            <div class="form-group">
+                                <label for="quantidade">Vendas:</label>
+                                <input type="number" name="vendas" value="{{ $produto->vendas }}"
+                                    class="form-control" required>
+                            </div>
+
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-success">Atualizar</button>
                                 <a href="{{ route('produtos.index') }}" class="btn btn-secondary">Voltar</a>
