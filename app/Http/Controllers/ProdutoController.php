@@ -156,33 +156,38 @@ class ProdutoController extends Controller
 
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
+
     public function mediaVendasMensal()
     {
-        // Obtem os históricos do mês atual
+        // Obtém os históricos do mês atual
         $historicos = Historico::whereMonth('created_at', now()->month)
                                 ->whereYear('created_at', now()->year)
                                 ->get();
-    
+
         // Agrupa os históricos pelo nome do produto
         $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
+            // Calcula o total de vendas e o número total de dias no mês
             $totalVendas = $grupo->sum('vendas');
             $quantidadeProduzida = $grupo->last()->quantidade; // Assume que a última quantidade é a atual
-            $totalDias = $grupo->groupBy(function($data) {
+
+            // Agrupa os históricos por dia
+            $dias = $grupo->groupBy(function($data) {
                 return $data->created_at->format('Y-m-d');
-            })->count();
-    
+            });
+
+            // Calcula o número total de dias únicos
+            $totalDias = $dias->count();
+
+            // Calcula a média de vendas por dia
             $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
-    
+
             return [
                 'quantidade' => $quantidadeProduzida,
                 'vendas' => $totalVendas,
                 'media' => $mediaVendas,
             ];
         });
-    
+
         return view('historico.media', compact('produtos'));
     }
-
-    
-
 }

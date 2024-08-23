@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas Mensal</a>
+                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
