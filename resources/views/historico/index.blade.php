@@ -1,19 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <!-- Rotas no Canto Esquerdo -->
-        <div class="col-md-2">
-            <div class="d-flex flex-column align-items-start mb-3">
-                <!-- Rotas Acima do Card de Histórico -->
-                <a href="{{ route('produtos.index') }}" class="btn btn-primary">Lista de Produtos</a>
-                <a href="{{ route('produtos.create') }}" class="btn btn-primary">Registrar Produto</a>
-                <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" data-spy="affix" data-offset-top="0">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <!-- Conteúdo Principal -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('produtos.index') }}">
+                        <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
+                        Lista de Produtos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas Mensal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
+                </li>
+            </ul>
+        </div>
+    </div>          
+</nav>
+
+<!-- Conteúdo Principal -->
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header text-center">Histórico de Produtos</div>

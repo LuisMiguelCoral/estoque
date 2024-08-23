@@ -11,7 +11,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('produtos.index') }}">Lista de Produtos</a>
+                    <a class="nav-link" href="{{ route('produtos.index') }}">
+                        <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
+                        Lista de Produtos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('historico.index') }}">Histórico de Vendas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 

@@ -9,12 +9,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Logo como Favicon -->
+    <link rel="icon" href="{{ asset('images/Logo-rog.png') }}" type="image/png"> <!-- Adicionado -->
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet"> <!-- Adicionado -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 

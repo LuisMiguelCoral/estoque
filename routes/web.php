@@ -41,3 +41,5 @@ Route::put('/historico/updateAll', [ProdutoController::class, 'updateHistoricos'
 Route::get('/historico', [ProdutoController::class, 'historico'])->name('historico.index');
 
 Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.vendas.mensal');
+
+
