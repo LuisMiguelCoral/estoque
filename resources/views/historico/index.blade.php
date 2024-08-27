@@ -35,21 +35,23 @@
             <div class="card">
                 <div class="card-header text-center">Histórico de Produtos</div>
                 <div class="card-body">
-                               <!-- Formulário de filtro de data -->
-                                    <form action="{{ route('historico.index') }}" method="GET" class="form-inline mb-3">
-                                        <div class="form-group mr-2">
-                                            <label for="date" class="mr-2">Filtrar por data:</label>
-                                            <input type="date" name="date" id="date" class="form-control-sm" value="{{ request('date') }}">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                                    </form>
+                    @if(session('success'))
+                        <div class="alert alert-success text-center">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
+                    <form action="{{ route('historico.index') }}" method="GET" class="form-inline mb-3">
+                        <div class="form-group mt-2">
+                            <label for="date" class="mr-2">Filtrar por data:</label>
+                            <input type="date" name="date" id="date" class="form-control-sm ms-2" value="{{ request('date') }}">
+                            <button type="submit" class="btn btn-primary ms-2">Filtrar</button>
+                        </div>
+                    </form>
+                    
                     <form action="{{ route('historico.updateAll') }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        </div>
 
                         @if ($historicos->isEmpty())
                             <p>Nenhum histórico encontrado.</p>
@@ -83,6 +85,10 @@
                                 </tbody>
                             </table>
                         @endif
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                        </div>
                     </form>
                 </div>
             </div>

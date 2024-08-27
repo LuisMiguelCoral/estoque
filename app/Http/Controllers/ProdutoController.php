@@ -28,7 +28,7 @@ class ProdutoController extends Controller
     {
         $request->validate([
             'nome' => 'required|unique:produtos,nome',
-            'quantidade' => 'required|integer|min:0', 
+            'quantidade' => 'required|integer|min:0',
         ], [
             'nome.unique' => 'Nome selecionado já registrado',
             'quantidade.min' => 'Quantidade não pode ser negativa',
@@ -37,10 +37,9 @@ class ProdutoController extends Controller
         $produto = new Produto;
         $produto->nome = $request->nome;
         $produto->quantidade = $request->quantidade;
-        $produto->vendas = 0; // Inicializa com 0 vendas
+        $produto->vendas = 0; 
         $produto->save();
 
-        // Registra o produto no histórico ao ser criado
         Historico::create([
             'produto_id' => $produto->id,
             'nome' => $produto->nome,
@@ -75,8 +74,7 @@ class ProdutoController extends Controller
                 $produto->quantidade = $data['quantidade'];
                 $produto->vendas = $data['vendas'];
                 $produto->save();
-    
-                // Registra a atualização no histórico
+
                 Historico::create([
                     'produto_id' => $produto->id,
                     'nome' => $produto->nome,
@@ -87,7 +85,7 @@ class ProdutoController extends Controller
             }
         }
     
-        return redirect()->route('produtos.index')->with('success', 'Produtos atualizados e histórico registrado!');
+        return redirect()->route('historico.index')->with('success', 'Produtos atualizados e histórico registrado!');
     }
     
     public function edit($id)
@@ -110,7 +108,6 @@ class ProdutoController extends Controller
         $produto->vendas = $request->input('vendas');
         $produto->save();
 
-        // Registra a atualização no histórico
         Historico::create([
             'produto_id' => $produto->id,
             'nome' => $produto->nome,
@@ -124,25 +121,20 @@ class ProdutoController extends Controller
     }
 
     public function historico(Request $request)
-{
-    $query = Historico::query();
+    {
+        $query = Historico::query();
 
-    // Verifique se o filtro de data foi fornecido
-    if ($request->has('date') && !empty($request->date)) {
-        $date = $request->date;
+        if ($request->has('date') && !empty($request->date)) {
+            $date = $request->input('date');
 
-        // Aplique o filtro de data
-        $query->whereDate('created_at', $date);
+            $query->whereDate('created_at', $date);
+        }
+
+        $historicos = $query->orderBy('created_at', 'desc')->get();
+    
+        return view('historico.index', compact('historicos'));
     }
-
-    // Obtenha os registros filtrados
-    $historicos = $query->orderBy('created_at', 'desc')->get();
-
-    // Verifique se a consulta está correta
-    // dd($historicos);
-
-    return view('historico.index', compact('historicos'));
-}
+    
     public function updateHistoricos(Request $request)
     {
         $validatedData = $request->validate([
@@ -163,36 +155,35 @@ class ProdutoController extends Controller
     }
 
     public function mediaVendasMensal(Request $request)
-{
-    // Captura o mês e o ano da requisição, ou usa o mês e ano atuais como padrão
-    $month = $request->input('month', now()->month);
-    $year = $request->input('year', now()->year);
+    {
+        $month = $request->input('month', now()->month);
+        $year = $request->input('year', now()->year);
 
-    // Filtra os históricos pelo mês e ano fornecidos
-    $historicos = Historico::whereMonth('created_at', $month)
-                            ->whereYear('created_at', $year)
-                            ->get();
+        $historicos = Historico::whereMonth('created_at', $month)
+                                ->whereYear('created_at', $year)
+                                ->get();
 
-    $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
-        $totalVendas = $grupo->sum('vendas');
-        $quantidadeProduzida = $grupo->last()->quantidade; 
+        $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
+            $totalVendas = $grupo->sum('vendas');
+            $quantidadeProduzida = $grupo->first()->quantidade; 
 
-        $dias = $grupo->groupBy(function($data) {
-            return $data->created_at->format('Y-m-d');
+            $dias = $grupo->groupBy(function($data) {
+                return $data->created_at->format('Y-m-d');
+            });
+
+            $totalDias = $dias->count();
+
+            $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
+    
+            return [
+                'quantidade' => $quantidadeProduzida,
+                'vendas' => $totalVendas,
+                'media' => $mediaVendas,
+                'dias' => $totalDias,
+            ];
         });
-
-        $totalDias = $dias->count();
-
-        $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
-
-        return [
-            'quantidade' => $quantidadeProduzida,
-            'vendas' => $totalVendas,
-            'media' => $mediaVendas,
-        ];
-    });
-
-    return view('historico.media', compact('produtos'));
-}
-
+    
+        return view('historico.media', compact('produtos'));
+    }
+    
 }
