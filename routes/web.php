@@ -6,16 +6,6 @@ use App\Http\Controllers\ProdutoBackupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoricoController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| Aqui é onde você pode registrar as rotas da web para o seu aplicativo.
-| Essas rotas são carregadas pelo RouteServiceProvider dentro de um grupo que
-| contém o grupo de middleware "web". Agora crie algo incrível!
-|
-*/
-
 // Rotas de autenticação
 Auth::routes();
 
@@ -31,17 +21,11 @@ Route::post('/produtos/update-all', [ProdutoController::class, 'updateAll'])->na
 // Rota para o ProdutoBackupController
 Route::get('/produto-backup', [ProdutoBackupController::class, 'index'])->name('produto-backup.index');
 
-// Rota para o controlador de histórico
+// Rota para o controlador de histórico (GET)
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 
 // Rota para o método updateHistoricos no ProdutoController
 Route::put('/historico/updateAll', [ProdutoController::class, 'updateHistoricos'])->name('historico.updateAll');
 
 // Rota para média de vendas mensais
-Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.vendas.mensal');
-
-Route::post('/historico', [ProdutoController::class, 'historico'])->name('historico.index');
-
-Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.mensal');
-
 Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.mensal');
