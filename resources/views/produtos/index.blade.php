@@ -1,6 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" data-spy="affix" data-offset-top="0">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">
+                        <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
+                        <!-- Lista de Produtos -->
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('historico.index') }}">Histórico de Vendas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
+                </li>
+            </ul>
+        </div>
+    </div>          
+</nav>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -35,17 +65,20 @@
                                         <td>{{ $produto->vendas }}</td>
                                         <td>
                                             <a href="{{ route('produtos.edit', $produto->id) }}"
-                                                class="btn btn-warning btn-sm">Editar</a>
-
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="event.preventDefault(); if(confirm('Tem certeza que deseja excluir este produto?')){ document.getElementById('delete-form-{{ $produto->id }}').submit(); }">Excluir</button>
-
-                                            <form id="delete-form-{{ $produto->id }}"
-                                                action="{{ route('produtos.destroy', $produto->id) }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
+                                                class="btn btn-warning btn-sm me-2">Editar</a>
+                                             
+                                             <button type="button" class="btn btn-danger btn-sm"
+                                                     onclick="event.preventDefault(); if(confirm('Tem certeza que deseja excluir este produto?')){ document.getElementById('delete-form-{{ $produto->id }}').submit(); }">
+                                                 Excluir
+                                             </button>
+                                             
+                                             <form id="delete-form-{{ $produto->id }}"
+                                                   action="{{ route('produtos.destroy', $produto->id) }}" method="POST"
+                                                   style="display: none;">
+                                                 @csrf
+                                                 @method('DELETE')
+                                             </form>
+                                             
                                         </td>
                                     </tr>
                                 @endforeach

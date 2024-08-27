@@ -190,4 +190,5 @@ class ProdutoController extends Controller
 
         return view('historico.media', compact('produtos'));
     }
+
 }

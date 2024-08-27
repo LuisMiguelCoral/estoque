@@ -34,12 +34,10 @@ Route::get('/produto-backup', [ProdutoBackupController::class, 'index'])->name('
 // Rota para o controlador de histórico
 Route::get('/historico', [HistoricoController::class, 'index'])->name('historico.index');
 
-Route::get('/produtos/edit/{id}', [ProdutoController::class, 'edit'])->name('produtos.edit');
-
+// Rota para o método updateHistoricos no ProdutoController
 Route::put('/historico/updateAll', [ProdutoController::class, 'updateHistoricos'])->name('historico.updateAll');
 
-Route::get('/historico', [ProdutoController::class, 'historico'])->name('historico.index');
-
+// Rota para média de vendas mensais
 Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.vendas.mensal');
 
-
+Route::post('/historico', [ProdutoController::class, 'historico'])->name('historico.index');
