@@ -17,7 +17,7 @@
                         <a href="{{ route('produtos.index') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Lista de Produtos</a>
                         <a href="{{ route('produtos.create') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Registrar Produto</a>
                         <a href="{{ route('historico.index') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Histórico de Produtos</a>
-                        <a href="{{ route('media.vendas.mensal') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Média de Vendas Mensal</a> <!-- Novo link adicionado -->
+                        <a href="{{ route('media.mensal') }}" class="btn btn-secondary custom-hover mb-2 w-50 text-center">Média de Vendas Mensal</a> <!-- Novo link adicionado -->
                     </div>
                 </div>
             </div>

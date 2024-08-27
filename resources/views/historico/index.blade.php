@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas</a>
+                    <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
@@ -29,22 +29,20 @@
     </div>          
 </nav>
 
-<!-- Conteúdo Principal -->
 <div class="container mt-5 pt-4">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header text-center">Histórico de Produtos</div>
                 <div class="card-body">
-
-                    <!-- Formulário de Filtro -->
-                    <form action="{{ route('historico.index') }}" method="GET" class="form-inline mb-3">
-                        <div class="form-group mr-2">
-                            <label for="date" class="mr-2">Filtrar por data:</label>
-                            <input type="date" name="date" id="date" class="form-control-sm" value="{{ request('date') }}">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                    </form>
+                               <!-- Formulário de filtro de data -->
+                                    <form action="{{ route('historico.index') }}" method="GET" class="form-inline mb-3">
+                                        <div class="form-group mr-2">
+                                            <label for="date" class="mr-2">Filtrar por data:</label>
+                                            <input type="date" name="date" id="date" class="form-control-sm" value="{{ request('date') }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                                    </form>
 
                     <form action="{{ route('historico.updateAll') }}" method="POST">
                         @csrf

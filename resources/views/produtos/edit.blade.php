@@ -23,7 +23,7 @@
                     <a class="nav-link" href="{{ route('historico.index') }}">Histórico de Vendas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('media.vendas.mensal') }}">Média de Vendas</a>
+                    <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Voltar</a> 

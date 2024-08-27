@@ -123,21 +123,26 @@ class ProdutoController extends Controller
             ->with('success', 'Produto atualizado com sucesso!');
     }
 
-    // Método para exibir o histórico com filtro por dia
     public function historico(Request $request)
-    {
-        $query = Historico::query();
+{
+    $query = Historico::query();
 
-        // Verifica se o filtro de data foi aplicado
-        if ($request->has('date') && $request->date) {
-            $query->whereDate('created_at', $request->date);
-        }
+    // Verifique se o filtro de data foi fornecido
+    if ($request->has('date') && !empty($request->date)) {
+        $date = $request->date;
 
-        $historicos = $query->orderBy('created_at', 'desc')->get();
-
-        return view('historico.index', compact('historicos'));
+        // Aplique o filtro de data
+        $query->whereDate('created_at', $date);
     }
 
+    // Obtenha os registros filtrados
+    $historicos = $query->orderBy('created_at', 'desc')->get();
+
+    // Verifique se a consulta está correta
+    // dd($historicos);
+
+    return view('historico.index', compact('historicos'));
+}
     public function updateHistoricos(Request $request)
     {
         $validatedData = $request->validate([
@@ -157,38 +162,37 @@ class ProdutoController extends Controller
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
 
-    public function mediaVendasMensal()
-    {
-        // Obtém os históricos do mês atual
-        $historicos = Historico::whereMonth('created_at', now()->month)
-                                ->whereYear('created_at', now()->year)
-                                ->get();
+    public function mediaVendasMensal(Request $request)
+{
+    // Captura o mês e o ano da requisição, ou usa o mês e ano atuais como padrão
+    $month = $request->input('month', now()->month);
+    $year = $request->input('year', now()->year);
 
-        // Agrupa os históricos pelo nome do produto
-        $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
-            // Calcula o total de vendas e o número total de dias no mês
-            $totalVendas = $grupo->sum('vendas');
-            $quantidadeProduzida = $grupo->last()->quantidade; // Assume que a última quantidade é a atual
+    // Filtra os históricos pelo mês e ano fornecidos
+    $historicos = Historico::whereMonth('created_at', $month)
+                            ->whereYear('created_at', $year)
+                            ->get();
 
-            // Agrupa os históricos por dia
-            $dias = $grupo->groupBy(function($data) {
-                return $data->created_at->format('Y-m-d');
-            });
+    $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
+        $totalVendas = $grupo->sum('vendas');
+        $quantidadeProduzida = $grupo->last()->quantidade; 
 
-            // Calcula o número total de dias únicos
-            $totalDias = $dias->count();
-
-            // Calcula a média de vendas por dia
-            $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
-
-            return [
-                'quantidade' => $quantidadeProduzida,
-                'vendas' => $totalVendas,
-                'media' => $mediaVendas,
-            ];
+        $dias = $grupo->groupBy(function($data) {
+            return $data->created_at->format('Y-m-d');
         });
 
-        return view('historico.media', compact('produtos'));
-    }
+        $totalDias = $dias->count();
+
+        $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
+
+        return [
+            'quantidade' => $quantidadeProduzida,
+            'vendas' => $totalVendas,
+            'media' => $mediaVendas,
+        ];
+    });
+
+    return view('historico.media', compact('produtos'));
+}
 
 }
