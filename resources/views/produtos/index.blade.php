@@ -67,16 +67,14 @@
                                             <a href="{{ route('produtos.edit', $produto->id) }}"
                                                 class="btn btn-warning btn-sm me-2">Editar</a>
                                              
-                                             <button type="button" class="btn btn-danger btn-sm"
-                                                     onclick="event.preventDefault(); if(confirm('Tem certeza que deseja excluir este produto?')){ document.getElementById('delete-form-{{ $produto->id }}').submit(); }">
-                                                 Excluir
-                                             </button>
-                                             
                                              <form id="delete-form-{{ $produto->id }}"
                                                    action="{{ route('produtos.destroy', $produto->id) }}" method="POST"
-                                                   style="display: none;">
+                                                   style="display: inline;">
                                                  @csrf
                                                  @method('DELETE')
+                                                 <button type="submit" class="btn btn-danger btn-sm">
+                                                     Excluir
+                                                 </button>
                                              </form>
                                              
                                         </td>

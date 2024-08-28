@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Historico;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class ProdutoController extends Controller
 {
@@ -54,11 +56,24 @@ class ProdutoController extends Controller
 
     public function destroy($id)
     {
-        $produto = Produto::findOrFail($id);
-        $produto->delete();
+        DB::beginTransaction();
+    
+        try {
+            $produto = Produto::find($id);
+            if (!$produto) {
+                return redirect()->route('produtos.index')->with('error', 'Produto não encontrado.');
+            }
 
-        return redirect()->route('produtos.index')
-                         ->with('success', 'Produto excluído com sucesso!');
+            Historico::where('produto_id', $id)->delete();
+
+            $produto->delete(); 
+    
+            DB::commit();
+            return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('produtos.index')->with('error', 'Erro ao excluir o produto: ' . $e->getMessage());
+        }
     }
 
     public function updateAll(Request $request)

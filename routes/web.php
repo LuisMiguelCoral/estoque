@@ -29,3 +29,4 @@ Route::put('/historico/updateAll', [ProdutoController::class, 'updateHistoricos'
 
 // Rota para média de vendas mensais
 Route::get('/media-vendas-mensal', [ProdutoController::class, 'mediaVendasMensal'])->name('media.mensal');
+
