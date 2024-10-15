@@ -57,9 +57,11 @@
                             <input type="number" name="quantidade" id="quantidade" class="form-control" required>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-primary">Registrar Produto</button>
+                            <button type="submit" class="btn btn-primary me-2">Registrar Produto</button>
+                            <a href="{{ route('produtos.index') }}" class="btn btn-secondary">Voltar</a>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
