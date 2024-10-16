@@ -22,9 +22,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
-                </li>
             </ul>
         </div>
     </div>          
@@ -43,7 +40,7 @@
                                     <option value="">Selecione o Mês</option>
                                     @for ($m = 1; $m <= 12; $m++)
                                         <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
-                                            {{ DateTime::createFromFormat('!m', $m)->format('F') }}
+                                            {{ ucfirst(strtolower(\Carbon\Carbon::createFromFormat('m', $m)->locale('pt_BR')->translatedFormat('F'))) }}
                                         </option>
                                     @endfor
                                 </select>

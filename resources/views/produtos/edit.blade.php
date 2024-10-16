@@ -25,9 +25,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
-                </li>
             </ul>
         </div>
     </div>          

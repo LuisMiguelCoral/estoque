@@ -24,9 +24,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Voltar</a> 
-                </li>
             </ul>
         </div>
     </div>          
@@ -43,7 +40,6 @@
                             </div>
                         @endif
                         <div class="d-flex justify-content-between mb-3">
-                            <a href="{{ route('home') }}" class="btn btn-primary">Voltar</a>
                             <a href="{{ route('produtos.create') }}" class="btn btn-primary">Registrar Novo Produto</a>
                         </div>
                         <table class="table-bordered table">
