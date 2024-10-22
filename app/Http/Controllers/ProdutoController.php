@@ -154,36 +154,49 @@ class ProdutoController extends Controller
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
 
-    public function mediaVendasMensal(Request $request)
-    {
-        $month = $request->input('month', now()->month);
-        $year = $request->input('year', now()->year);
+    // public function mediaVendasMensal(Request $request)
+    // {
+    //     $month = $request->input('month');
+    //     $year = $request->input('year');
 
-        $historicos = Historico::whereMonth('created_at', $month)
-                                ->whereYear('created_at', $year)
-                                ->get();
+    //     if (!$month || !$year) {
+    //         return view('historico.media', ['produtosCalculados' => [], 'message' => 'Por favor, selecione um mês e um ano.']);
+    //     }
 
-        $produtos = $historicos->groupBy('nome')->map(function ($grupo) {
-            $totalVendas = $grupo->sum('vendas');
-            $quantidadeProduzida = $grupo->first()->quantidade; 
-
-            $dias = $grupo->groupBy(function($data) {
-                return $data->created_at->format('Y-m-d');
-            });
-
-            $totalDias = $dias->count();
-
-            $mediaVendas = $totalDias > 0 ? $totalVendas / $totalDias : 0;
+    //     $produtos = Produto::whereMonth('created_at', $month)
+    //                         ->whereYear('created_at', $year)
+    //                         ->get();
     
-            return [
-                'quantidade' => $quantidadeProduzida,
-                'vendas' => $totalVendas,
-                'media' => $mediaVendas,
-                'dias' => $totalDias,
-            ];
-        });
+    //     $produtosCalculados = []; 
+
+    //     foreach ($produtos as $produto) {
+    //         if (!isset($produtosCalculados[$produto->nome])) {
+    //             $produtosCalculados[$produto->nome] = [
+    //                 'quantidade' => 0,
+    //                 'vendas' => 0,
+    //                 'dias' => [], 
+    //             ];
+    //         }
     
-        return view('historico.media', compact('produtos'));
-    }
+    //         $produtosCalculados[$produto->nome]['quantidade'] += $produto->quantidade;
+    //         $produtosCalculados[$produto->nome]['vendas'] += $produto->vendas;
     
+    //         $createdAt = $produto->created_at->format('Y-m-d');
+    //         if (!isset($produtosCalculados[$produto->nome]['dias'][$createdAt])) {
+    //             $produtosCalculados[$produto->nome]['dias'][$createdAt] = true;
+    //         }
+    //     }
+
+    //     foreach ($produtosCalculados as $nome => $produto) {
+    //         $diasCount = count($produtosCalculados[$nome]['dias']); 
+    //         $produtosCalculados[$nome]['media'] = $produto['vendas'] / ($diasCount > 0 ? $diasCount : 1); 
+    //     }
+    
+    //     return view('historico.media', [
+    //         'produtosCalculados' => $produtosCalculados,
+    //         'message' => null,
+    //     ]);
+    // }
+    
+
 }
