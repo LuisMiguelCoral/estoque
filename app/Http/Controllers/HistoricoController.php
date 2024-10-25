@@ -70,7 +70,6 @@ class HistoricoController extends Controller
             $produtosCalculados[$produto->nome]['vendas'] += $produto->vendas;
         }
 
-        // Retorna a view com os dados calculados
         return view('historico.relatorio', [
             'produtosCalculados' => $produtosCalculados,
             'message' => null,
@@ -81,35 +80,33 @@ class HistoricoController extends Controller
     {
         $month = $request->input('month');
         $year = $request->input('year');
-
+    
         if (!$month || !$year) {
             return view('historico.media', ['produtosCalculados' => [], 'message' => 'Por favor, selecione um mês e um ano.']);
         }
-
-        $produtos = Produto::whereMonth('created_at', $month)
-                            ->whereYear('created_at', $year)
-                            ->get();
+    
+        $historicos = Historico::whereMonth('created_at', $month)
+                               ->whereYear('created_at', $year)
+                               ->get();
     
         $produtosCalculados = []; 
-
-        foreach ($produtos as $produto) {
-            if (!isset($produtosCalculados[$produto->nome])) {
-                $produtosCalculados[$produto->nome] = [
+    
+        foreach ($historicos as $historico) {
+            if (!isset($produtosCalculados[$historico->nome])) {
+                $produtosCalculados[$historico->nome] = [
                     'quantidade' => 0,
                     'vendas' => 0,
-                    'dias' => [], 
+                    'dias' => [],
                 ];
             }
     
-            $produtosCalculados[$produto->nome]['quantidade'] += $produto->quantidade;
-            $produtosCalculados[$produto->nome]['vendas'] += $produto->vendas;
+            $produtosCalculados[$historico->nome]['quantidade'] += $historico->quantidade;
+            $produtosCalculados[$historico->nome]['vendas'] += $historico->vendas;
     
-            $createdAt = $produto->created_at->format('Y-m-d');
-            if (!isset($produtosCalculados[$produto->nome]['dias'][$createdAt])) {
-                $produtosCalculados[$produto->nome]['dias'][$createdAt] = true;
-            }
+            $createdAt = $historico->created_at->format('Y-m-d');
+            $produtosCalculados[$historico->nome]['dias'][$createdAt] = true;
         }
-
+    
         foreach ($produtosCalculados as $nome => $produto) {
             $diasCount = count($produtosCalculados[$nome]['dias']); 
             $produtosCalculados[$nome]['media'] = $produto['vendas'] / ($diasCount > 0 ? $diasCount : 1); 

@@ -116,24 +116,34 @@ class ProdutoController extends Controller
             'quantidade' => 'required|integer|min:0',
             'vendas' => 'required|integer|min:0',
         ]);
-
+    
         $produto = Produto::findOrFail($id);
         $produto->nome = $request->input('nome');
         $produto->quantidade = $request->input('quantidade');
         $produto->vendas = $request->input('vendas');
         $produto->save();
 
-        Historico::create([
-            'produto_id' => $produto->id,
-            'nome' => $produto->nome,
-            'quantidade' => $produto->quantidade,
-            'vendas' => $produto->vendas,
-            'created_at' => now(),
-        ]);
-
+        $historico = Historico::where('produto_id', $produto->id)
+                              ->whereDate('created_at', now()->toDateString())
+                              ->first();
+        if ($historico) {
+            $historico->quantidade = $produto->quantidade;
+            $historico->vendas = $produto->vendas;
+            $historico->save();
+        } else {
+            Historico::create([
+                'produto_id' => $produto->id,
+                'nome' => $produto->nome,
+                'quantidade' => $produto->quantidade,
+                'vendas' => $produto->vendas,
+                'created_at' => now(),
+            ]);
+        }
+    
         return redirect()->route('produtos.index')
             ->with('success', 'Produto atualizado com sucesso!');
     }
+    
     
     public function updateHistoricos(Request $request)
     {
@@ -153,6 +163,14 @@ class ProdutoController extends Controller
 
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
+
+    public function reset()
+{
+    // Reseta a quantidade e vendas de todos os produtos para zero
+    Produto::query()->update(['quantidade' => 0, 'vendas' => 0]);
+
+    echo "Valores resetados com sucesso!";
+}
 
     // public function mediaVendasMensal(Request $request)
     // {

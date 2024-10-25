@@ -22,7 +22,7 @@
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> <!-- Rota do Relatório de Vendas -->
+                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
                 </li>
             </ul>
         </div>

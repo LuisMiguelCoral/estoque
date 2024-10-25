@@ -12,7 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
                         <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
-                        <!-- Lista de Produtos -->
                     </a>
                 </li>
                 <li class="nav-item">
@@ -25,7 +24,7 @@
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> <!-- Rota do Relatório de Vendas -->
+                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
                 </li>
             </ul>
         </div>
