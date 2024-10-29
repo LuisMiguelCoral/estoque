@@ -4,37 +4,31 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Produto;
+use App\Models\ProdutoBackup;
+use Carbon\Carbon;
 
 class ResetProdutos extends Command
 {
     protected $signature = 'produtos:reset';
-    protected $description = 'Reseta a quantidade e vendas dos produtos e armazena os dados antigos.';
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Reseta a tabela de produtos e move os dados para a tabela de backup';
 
     public function handle()
     {
-        // Armazenar dados antigos
+        // Mover dados para o backup
         $produtos = Produto::all();
         foreach ($produtos as $produto) {
-            \DB::table('produto_backup')->insert([
-                'produto_id' => $produto->id,
+            ProdutoBackup::create([
                 'nome' => $produto->nome,
                 'quantidade' => $produto->quantidade,
                 'vendas' => $produto->vendas,
-                'created_at' => now(),
+                'backup_date' => Carbon::now(),
             ]);
         }
 
-        // Resetar valores
-        Produto::query()->update([
-            'quantidade' => 0,
-            'vendas' => 0,
-        ]);
+        // Resetar os produtos
+        Produto::query()->update(['quantidade' => 0, 'vendas' => 0]);
 
-        $this->info('Produtos resetados e dados antigos armazenados com sucesso.');
+        $this->info('Produtos resetados e backup criado com sucesso!');
     }
 }
+

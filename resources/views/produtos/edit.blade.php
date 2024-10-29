@@ -25,9 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>          
@@ -71,10 +71,9 @@
                             </div>
 
                             <div class="form-group text-center mt-2">
-                                <button type="submit" class="btn btn-success">Atualizar</button>
+                                <button type="submit" class="btn btn-primary btn-block">Atualizar</button>
                                 <a href="{{ route('produtos.index') }}" class="btn btn-secondary ms-3">Voltar</a>
                             </div>
-                            
                         </form>
                     </div>
                 </div>

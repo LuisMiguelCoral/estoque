@@ -33,3 +33,6 @@ Route::get('/media-vendas-mensal', [HistoricoController::class, 'mediaVendasMens
 
 // Rota para relatório de vendas
 Route::get('/relatorio-vendas', [HistoricoController::class, 'relatorioVendas'])->name('relatorio.vendas');
+
+// Em routes/web.php
+Route::get('/historico/media/download', [HistoricoController::class, 'downloadMedia'])->name('media.download');

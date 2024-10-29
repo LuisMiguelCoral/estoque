@@ -15,15 +15,15 @@
                         Lista de Produtos
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>          

@@ -14,18 +14,18 @@
                         <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('historico.index') }}">Histórico de Vendas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('media.mensal') }}">Média de Vendas</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>          
@@ -34,7 +34,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header text-center">Lista de Produtos</div>
+                    <div class="card-header text-center">Lista de Produtos e Vendas</div>
                     <div class="card-body">
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success">

@@ -19,12 +19,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('historico.index') }}">Histórico de Vendas</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.create') }}">Registrar Produto</a> 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> <!-- Rota do Relatório de Vendas -->
-                </li>
+                </li> --}}
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="{{ route('relatorio.vendas') }}">Relatório de Vendas</a> 
+                </li> --}}
             </ul>
         </div>
     </div>          
@@ -67,7 +67,7 @@
                     @if (isset($message) && $message)
                         <div class="alert alert-warning">{{ $message }}</div>
                     @endif
-
+                    <button onclick="window.print()" class="btn btn-primary">Imprimir Relatório</button>
                     <table class="table table-bordered">
                         <thead class="thead-dark">
                             <tr>

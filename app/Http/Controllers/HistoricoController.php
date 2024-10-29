@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Historico;
 use App\Models\Produto; // Certifique-se de importar o modelo correto
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HistoricoController extends Controller
 {
@@ -117,4 +118,11 @@ class HistoricoController extends Controller
             'message' => null,
         ]);
     }
+public function downloadMedia(Request $request)
+{
+    $produtosCalculados = $this->obterDadosCalculados($request); // Função para obter dados filtrados
+    $pdf = Pdf::loadView('historico.media', compact('produtosCalculados'))->setOptions(['defaultFont' => 'sans-serif']);
+    return $pdf->download('relatorio_media.pdf');
+}
+
 }
