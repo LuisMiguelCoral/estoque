@@ -41,11 +41,11 @@
                             <div class="col-md-3">
                                 <select name="month" class="form-control custom-select mb-1">
                                     <option value="">Selecione o Mês</option>
-                                    @for ($m = 1; $m <= 12; $m++)
+                                    @foreach (range(1, 12) as $m)
                                         <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
-                                            {{ ucfirst(strtolower(\Carbon\Carbon::createFromFormat('m', $m)->locale('pt_BR')->translatedFormat('F'))) }}
+                                            {{ ucfirst(strtolower(\Carbon\Carbon::create()->month($m)->locale('pt_BR')->translatedFormat('F'))) }}
                                         </option>
-                                    @endfor
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-3">

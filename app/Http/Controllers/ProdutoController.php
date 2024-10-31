@@ -164,14 +164,6 @@ class ProdutoController extends Controller
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
 
-    public function reset()
-{
-    // Reseta a quantidade e vendas de todos os produtos para zero
-    Produto::query()->update(['quantidade' => 0, 'vendas' => 0]);
-
-    echo "Valores resetados com sucesso!";
-}
-
     // public function mediaVendasMensal(Request $request)
     // {
     //     $month = $request->input('month');

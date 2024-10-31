@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Historico;
-use App\Models\Produto; // Certifique-se de importar o modelo correto
+use App\Models\Produto; 
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -35,20 +35,16 @@ class HistoricoController extends Controller
         $month = $request->input('month');
         $year = $request->input('year');
 
-        // Verificação de seleção de mês e ano
         if (!$month || !$year) {
             return view('historico.relatorio', [
                 'produtosCalculados' => [], 
                 'message' => 'Por favor, selecione um mês e um ano.'
             ]);
         }
-
-        // Carrega produtos filtrados por mês e ano
         $produtos = Produto::whereMonth('created_at', $month)
                             ->whereYear('created_at', $year)
                             ->get();
 
-        // Verifica se há produtos no mês selecionado
         if ($produtos->isEmpty()) {
             return view('historico.relatorio', [
                 'produtosCalculados' => [], 
@@ -56,7 +52,6 @@ class HistoricoController extends Controller
             ]);
         }
 
-        // Calcular quantidade e vendas acumuladas
         $produtosCalculados = [];
 
         foreach ($produtos as $produto) {
@@ -120,7 +115,7 @@ class HistoricoController extends Controller
     }
 public function downloadMedia(Request $request)
 {
-    $produtosCalculados = $this->obterDadosCalculados($request); // Função para obter dados filtrados
+    $produtosCalculados = $this->obterDadosCalculados($request); 
     $pdf = Pdf::loadView('historico.media', compact('produtosCalculados'))->setOptions(['defaultFont' => 'sans-serif']);
     return $pdf->download('relatorio_media.pdf');
 }

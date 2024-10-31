@@ -13,7 +13,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('produtos.index') }}">
                         <img src="{{ asset('images/Logo-rog.png') }}" alt="Rogimar" height="30" style="margin-right: 10px;">
-                        Lista de Produtos
                     </a>
                 </li>
                 {{-- <li class="nav-item">
