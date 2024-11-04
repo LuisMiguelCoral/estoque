@@ -79,7 +79,7 @@
                                         <td>
                                             <input type="number" name="historicos[{{ $historico->id }}][vendas]" value="{{ $historico->vendas }}" class="form-control">
                                         </td>
-                                        <td>{{ $historico->created_at->format('d/m/Y H:i:s') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($historico->created_at)->setTimezone('America/Sao_Paulo')->format('d/m/Y H:i:s') }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

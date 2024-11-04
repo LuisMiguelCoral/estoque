@@ -86,7 +86,7 @@
                                         <td>{{ $produto['quantidade'] }}</td>
                                         <td>{{ $produto['vendas'] }}</td>
                                         <td>{{ number_format($produto['media'], 2) }}</td>
-                                        <td>{{ implode(', ', array_keys($produto['dias'])) }}</td>
+                                        <td>{{ count($produto['dias']) }} dias</td>
                                     </tr>
                                 @endforeach
                             @else

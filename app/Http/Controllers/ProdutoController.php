@@ -163,6 +163,7 @@ class ProdutoController extends Controller
 
         return redirect()->route('historico.index')->with('success', 'Histórico atualizado com sucesso!');
     }
+    
 
     // public function mediaVendasMensal(Request $request)
     // {

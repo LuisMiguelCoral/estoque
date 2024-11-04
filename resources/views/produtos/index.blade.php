@@ -43,6 +43,8 @@
                         @endif
                         <div class="d-flex justify-content-between mb-3">
                             <a href="{{ route('produtos.create') }}" class="btn btn-primary">Registrar Novo Produto</a>
+                            <a href="{{ route('produtos.export.pdf') }}" class="btn btn-success">Exportar para PDF</a>
+
                         </div>
                         <table class="table-bordered table">
                             <thead class="thead-dark">

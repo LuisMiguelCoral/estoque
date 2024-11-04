@@ -6,6 +6,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ProdutoBackupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoricoController;
+use App\Http\Controllers\ProdutoExportController;
 
 // Rotas de autenticação
 Auth::routes();
@@ -36,3 +37,5 @@ Route::get('/relatorio-vendas', [HistoricoController::class, 'relatorioVendas'])
 
 // Em routes/web.php
 Route::get('/historico/media/download', [HistoricoController::class, 'downloadMedia'])->name('media.download');
+
+Route::get('/produtos/export/pdf', [ProdutoExportController::class, 'exportPdf'])->name('produtos.export.pdf');
