@@ -8,6 +8,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\ProdutoExportController;
 
+// Redireciona a rota raiz para a página de login
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 // Rotas de autenticação
 Auth::routes();
 
@@ -35,7 +40,8 @@ Route::get('/media-vendas-mensal', [HistoricoController::class, 'mediaVendasMens
 // Rota para relatório de vendas
 Route::get('/relatorio-vendas', [HistoricoController::class, 'relatorioVendas'])->name('relatorio.vendas');
 
-// Em routes/web.php
+// Rota para download da média de vendas
 Route::get('/historico/media/download', [HistoricoController::class, 'downloadMedia'])->name('media.download');
 
+// Rota para exportação de produtos em PDF
 Route::get('/produtos/export/pdf', [ProdutoExportController::class, 'exportPdf'])->name('produtos.export.pdf');
